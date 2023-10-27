@@ -22,3 +22,13 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// In a global accessible space, like your main.dart or another singleton class
+class UniqueIdGenerator {
+  static int _currentId = 0;
+
+  static int get nextId {
+    _currentId++;
+    return _currentId;
+  }
+}

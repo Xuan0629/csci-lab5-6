@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'grade.dart'; // Import the Grade class
+import 'grade.dart';
+import 'main.dart'; // Import the Grade class
 
 class GradeForm extends StatefulWidget {
   final Grade? grade; // If you're editing a grade, this is the grade to edit. Otherwise, it's null.
@@ -24,21 +25,28 @@ class _GradeFormState extends State<GradeForm> {
 
   void _saveGrade() {
     if (_formKey.currentState!.validate()) {
-      // If the form is valid, we create or update a Grade
       Grade newOrEditedGrade;
 
       if (widget.grade == null) {
         // We are adding a new grade, not editing an existing one
-        // For simplicity, we're creating a grade with a temporary ID of 0. Your backend should replace this with a real unique ID.
-        newOrEditedGrade = Grade(sid: _sidController.text, grade: _gradeController.text, id: 0);
+        newOrEditedGrade = Grade(
+          sid: _sidController.text,
+          grade: _gradeController.text,
+          id: UniqueIdGenerator.nextId, // Using the unique ID generator
+        );
       } else {
         // We are editing an existing grade, so we use the existing grade's ID
-        newOrEditedGrade = Grade(sid: _sidController.text, grade: _gradeController.text, id: widget.grade!.id);
+        newOrEditedGrade = Grade(
+          sid: _sidController.text,
+          grade: _gradeController.text,
+          id: widget.grade!.id,
+        );
       }
 
       Navigator.pop(context, newOrEditedGrade); // Pops the current route off the navigator and returns the new or edited grade
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
